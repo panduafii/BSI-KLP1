@@ -6,9 +6,6 @@ export default () => ({
     url: process.env.DATABASE_URL || '',
     ssl: process.env.DATABASE_SSL === 'true'
   },
-  redis: {
-    url: process.env.REDIS_URL || ''
-  },
   auth: {
     jwtSecret: process.env.JWT_SECRET || 'change-me'
   }

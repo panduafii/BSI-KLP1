@@ -29,8 +29,6 @@ services:
     environment:
       # Inside the compose network, talk to Postgres via service name
       DATABASE_URL: postgres://bsi_user:supersecret@postgres:5432/bsi_klp1
-      # Optional: forward redis URL if you enable redis service later
-      REDIS_URL: ${REDIS_URL:-}
     ports:
       - "3000:3000"
     depends_on:

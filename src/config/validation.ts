@@ -7,9 +7,6 @@ export const validationSchema = Joi.object({
     .uri({ scheme: [/postgres/] })
     .required(),
   DATABASE_SSL: Joi.string().valid('true', 'false').optional(),
-  REDIS_URL: Joi.string()
-    .uri({ scheme: [/redis/] })
-    .optional(),
   JWT_SECRET: Joi.string().min(10).required(),
   JWT_EXPIRES: Joi.string().optional(),
   LOG_LEVEL: Joi.string().valid('debug', 'info', 'warn', 'error').default('debug')

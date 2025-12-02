@@ -133,7 +133,6 @@ None – greenfield project. All references will be established by this spec.
 
 - Add `.env.example` with:
   - `DATABASE_URL=postgres://user:pass@localhost:5432/bsi_klp1`
-  - `REDIS_URL=redis://localhost:6379`
   - `JWT_SECRET=local-dev-secret`
   - `PORT=3000`
   - `LOG_LEVEL=debug|info`
