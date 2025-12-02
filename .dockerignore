@@ -1,0 +1,98 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# Build outputs
+dist/
+build/
+out/
+
+# Test files and directories
+test/
+tests/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+jest.config.ts
+jest-e2e.json
+coverage/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Version control
+.git/
+.gitignore
+.svn/
+.hg/
+
+# Environment and secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Temporary and local files
+tmp/
+temp/
+*.tmp
+.local/
+local/
+
+# Documentation and markdown
+README*
+docs/
+*.md
+
+# Docker files
+docker-compose*
+Dockerfile*
+
+# Project-specific
+reference-data/
+
+# Miscellaneous
+*.log
+.prettierrc
+.eslintrc.js
+
+# Exclude only empty directories (not needed in build)
+*/.keep
+
+# Exclude excalidraw files (large diagrams)
+*.excalidraw
+
+# Exclude CSV/XML/JSON manifests and data
+*.csv
+*.xml
+*.json
+
+# Exclude YAML manifests (unless needed for config)
+*.yaml
+
+# Allow src/ and scripts/ (source code)
+!src/
+!scripts/
+
+# Allow package.json/lock and tsconfig files
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig.build.json
+
+# Allow nest-cli.json
+!nest-cli.json
+
+# Allow main entry points
+!main.ts
+
+# End of .dockerignore

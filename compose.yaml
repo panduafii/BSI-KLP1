@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bsi_user
+      POSTGRES_PASSWORD: supersecret
+      POSTGRES_DB: bsi_klp1
+    ports:
+      - "5433:5432" # expose on 5433 to avoid clashing with local Postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bsi_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - appnet
+
+  ts-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    env_file:
+      - .env
+    environment:
+      # Inside the compose network, talk to Postgres via service name
+      DATABASE_URL: postgres://bsi_user:supersecret@postgres:5432/bsi_klp1
+      # Optional: forward redis URL if you enable redis service later
+      REDIS_URL: ${REDIS_URL:-}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  pgdata:

@@ -1,0 +1,17 @@
+# Workflow Status Template
+
+generated: "2025-12-01T00:21:11Z"
+project: "BSI-KLP1"
+project_type: "bmad-method"
+selected_track: "quick-flow"
+field_type: "greenfield"
+workflow_path: ".bmad/bmm/workflows/workflow-status/paths/quick-flow-greenfield.yaml"
+workflow_status:
+  # Phase 0 - Discovery (Optional)
+  brainstorm-project: "docs/bmm-brainstorming-session-2025-12-01.md"
+
+  # Phase 1 - Planning
+  tech-spec: "docs/tech-spec.md"
+
+  # Phase 2 - Implementation
+  sprint-planning: "docs/sprint-artifacts/sprint-status.yaml"
