@@ -56,6 +56,7 @@ export class BookingsService {
         const booking = manager.create(Booking, {
           roomId: dto.roomId,
           requesterId: ctx.userId,
+          requesterUserId: ctx.userId,
           requesterRole: ctx.userRole,
           purpose: dto.purpose,
           priority: dto.priority ?? BookingPriority.NORMAL,
@@ -69,6 +70,7 @@ export class BookingsService {
         const audit = manager.create(AuditLog, {
           bookingId: saved.id,
           action: 'BOOKING_SUBMITTED',
+          actorUserId: ctx.userId,
           actorId: ctx.userId,
           actorRole: ctx.userRole,
           fromState: undefined,
@@ -123,6 +125,7 @@ export class BookingsService {
     return this.dataSource.transaction(async (manager) => {
       booking.status = BookingStatus.APPROVED;
       booking.approvedBy = ctx.userId;
+      booking.approvedByUserId = ctx.userId;
       booking.approvedAt = new Date();
       const saved = await manager.save(booking);
 
@@ -130,6 +133,7 @@ export class BookingsService {
         manager.create(AuditLog, {
           bookingId: saved.id,
           action: 'BOOKING_APPROVED',
+          actorUserId: ctx.userId,
           actorId: ctx.userId,
           actorRole: ctx.userRole,
           fromState: BookingStatus.PENDING,
@@ -172,6 +176,7 @@ export class BookingsService {
         manager.create(AuditLog, {
           bookingId: saved.id,
           action: 'BOOKING_REJECTED',
+          actorUserId: ctx.userId,
           actorId: ctx.userId,
           actorRole: ctx.userRole,
           fromState: BookingStatus.PENDING,
@@ -215,6 +220,7 @@ export class BookingsService {
     return this.dataSource.transaction(async (manager) => {
       booking.status = BookingStatus.CANCELLED;
       booking.cancelledBy = ctx.userId;
+      booking.cancelledByUserId = ctx.userId;
       booking.cancelledAt = new Date();
       const saved = await manager.save(booking);
 
@@ -222,6 +228,7 @@ export class BookingsService {
         manager.create(AuditLog, {
           bookingId: saved.id,
           action: 'BOOKING_CANCELLED',
+          actorUserId: ctx.userId,
           actorId: ctx.userId,
           actorRole: ctx.userRole,
           fromState: previousStatus,

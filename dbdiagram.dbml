@@ -1,0 +1,87 @@
+// DB schema for BSI-KLP1 (room booking)
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id uuid [pk]
+  nim varchar [unique, not null]
+  email varchar [unique]
+  password_hash varchar [not null]
+  role varchar [not null] // student|lecturer|staff|admin
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table areas {
+  id uuid [pk]
+  code varchar [unique, not null]
+  name varchar [not null]
+  description text
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table rooms {
+  id uuid [pk]
+  code varchar [unique, not null]
+  name varchar [not null]
+  area_id uuid [ref: > areas.id]
+  capacity int
+  location varchar
+  features jsonb
+  is_active bool
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table bookings {
+  id uuid [pk]
+  room_id uuid [ref: > rooms.id]
+  requester_id varchar
+  requester_role varchar
+  purpose text
+  priority varchar // LOW|NORMAL|HIGH
+  start_time timestamptz
+  end_time timestamptz
+  status varchar // PENDING|APPROVED|REJECTED|CANCELLED
+  approved_by varchar
+  approved_at timestamptz
+  cancelled_by varchar
+  cancelled_at timestamptz
+  conflict_flag bool
+  rejection_reason text
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table audit_logs {
+  id uuid [pk]
+  booking_id uuid [ref: > bookings.id]
+  action varchar
+  actor_id varchar
+  actor_role varchar
+  from_state varchar
+  to_state varchar
+  created_at timestamptz
+}
+
+Table notification_outbox {
+  id uuid [pk]
+  booking_id uuid [ref: > bookings.id]
+  event_type varchar
+  payload jsonb
+  status varchar
+  created_at timestamptz
+}
+
+Table maintenance_tickets {
+  id uuid [pk]
+  room_id uuid [ref: > rooms.id]
+  title varchar
+  description text
+  status varchar // OPEN|IN_PROGRESS|RESOLVED
+  reported_by varchar
+  resolved_by varchar
+  resolved_at timestamptz
+  created_at timestamptz
+  updated_at timestamptz
+}

@@ -12,6 +12,7 @@ import {
 import { AuditLog } from '../audit/audit-log.entity';
 import { NotificationOutbox } from '../notifications/notification-outbox.entity';
 import { Room } from '../rooms/room.entity';
+import { User } from '../users/user.entity';
 
 enum BookingStatus {
   PENDING = 'PENDING',
@@ -38,6 +39,13 @@ export class Booking {
   @Column({ name: 'room_id' })
   roomId!: string;
 
+  @ManyToOne(() => User, { nullable: true, eager: false })
+  @JoinColumn({ name: 'requester_user_id' })
+  requesterUser?: User;
+
+  @Column({ name: 'requester_user_id', nullable: true })
+  requesterUserId?: string;
+
   @Column({ name: 'requester_id' })
   requesterId!: string;
 
@@ -59,11 +67,25 @@ export class Booking {
   @Column({ name: 'status', type: 'varchar', default: BookingStatus.PENDING })
   status!: BookingStatus;
 
+  @ManyToOne(() => User, { nullable: true, eager: false })
+  @JoinColumn({ name: 'approved_by_user_id' })
+  approvedByUser?: User;
+
+  @Column({ name: 'approved_by_user_id', nullable: true })
+  approvedByUserId?: string;
+
   @Column({ name: 'approved_by', nullable: true })
   approvedBy?: string;
 
   @Column({ name: 'approved_at', type: 'timestamptz', nullable: true })
   approvedAt?: Date;
+
+  @ManyToOne(() => User, { nullable: true, eager: false })
+  @JoinColumn({ name: 'cancelled_by_user_id' })
+  cancelledByUser?: User;
+
+  @Column({ name: 'cancelled_by_user_id', nullable: true })
+  cancelledByUserId?: string;
 
   @Column({ name: 'cancelled_by', nullable: true })
   cancelledBy?: string;

@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import { Booking } from '../bookings/booking.entity';
+import { User } from '../users/user.entity';
 
 @Entity({ name: 'audit_logs' })
 export class AuditLog {
@@ -23,6 +24,13 @@ export class AuditLog {
 
   @Column({ name: 'action', type: 'varchar' })
   action!: string;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'actor_user_id' })
+  actorUser?: User;
+
+  @Column({ name: 'actor_user_id', type: 'uuid', nullable: true })
+  actorUserId?: string;
 
   @Column({ name: 'actor_id', type: 'varchar' })
   actorId!: string;

@@ -8,6 +8,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 
+import { User } from '../users/user.entity';
 import { Room } from '../rooms/room.entity';
 
 enum MaintenanceStatus {
@@ -28,6 +29,13 @@ export class MaintenanceTicket {
   @Column({ name: 'room_id' })
   roomId!: string;
 
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'reported_by_user_id' })
+  reportedByUser?: User;
+
+  @Column({ name: 'reported_by_user_id', nullable: true })
+  reportedByUserId?: string;
+
   @Column({ name: 'title' })
   title!: string;
 
@@ -36,6 +44,13 @@ export class MaintenanceTicket {
 
   @Column({ name: 'status', type: 'varchar', default: MaintenanceStatus.OPEN })
   status!: MaintenanceStatus;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'resolved_by_user_id' })
+  resolvedByUser?: User;
+
+  @Column({ name: 'resolved_by_user_id', nullable: true })
+  resolvedByUserId?: string;
 
   @Column({ name: 'reported_by' })
   reportedBy!: string;

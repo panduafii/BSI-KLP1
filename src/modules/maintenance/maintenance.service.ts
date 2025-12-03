@@ -30,7 +30,8 @@ export class MaintenanceService {
       title: dto.title,
       description: dto.description,
       status: MaintenanceStatus.OPEN,
-      reportedBy: ctx.userId
+      reportedBy: ctx.userId,
+      reportedByUserId: ctx.userId
     });
     return this.maintenanceRepo.save(ticket);
   }
@@ -45,6 +46,7 @@ export class MaintenanceService {
 
     ticket.status = MaintenanceStatus.RESOLVED;
     ticket.resolvedBy = ctx.userId;
+    ticket.resolvedByUserId = ctx.userId;
     ticket.resolvedAt = new Date();
     return this.maintenanceRepo.save(ticket);
   }
