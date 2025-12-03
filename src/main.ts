@@ -10,6 +10,12 @@ import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
+  // Allow FE access (Render/localhost)
+  app.enableCors({
+    origin: true,
+    credentials: true
+  });
+
   app.use(new RequestIdMiddleware().use);
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalPipes(
