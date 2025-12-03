@@ -3,6 +3,7 @@ import { config as loadEnv } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 import { AuditLog } from '../modules/audit/audit-log.entity';
+import { Area } from '../modules/areas/area.entity';
 import { Booking } from '../modules/bookings/booking.entity';
 import { MaintenanceTicket } from '../modules/maintenance/maintenance-ticket.entity';
 import { NotificationOutbox } from '../modules/notifications/notification-outbox.entity';
@@ -17,7 +18,7 @@ const migrationsPath = isTsNode ? 'src/database/migrations/*.ts' : 'dist/databas
 const options: DataSourceOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  entities: [Room, Booking, AuditLog, NotificationOutbox, MaintenanceTicket, User],
+  entities: [Area, Room, Booking, AuditLog, NotificationOutbox, MaintenanceTicket, User],
   migrations: [migrationsPath],
   synchronize: false,
   logging: false

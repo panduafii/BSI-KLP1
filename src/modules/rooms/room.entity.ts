@@ -2,9 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+
+import { Area } from '../areas/area.entity';
 
 @Entity({ name: 'rooms' })
 export class Room {
@@ -16,6 +20,13 @@ export class Room {
 
   @Column()
   name!: string;
+
+  @ManyToOne(() => Area, { eager: false, nullable: true })
+  @JoinColumn({ name: 'area_id' })
+  area?: Area;
+
+  @Column({ name: 'area_id', nullable: true })
+  areaId?: string;
 
   @Column({ type: 'int', default: 0 })
   capacity!: number;
