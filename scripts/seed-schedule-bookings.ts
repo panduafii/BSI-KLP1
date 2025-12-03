@@ -12,7 +12,13 @@ loadEnv();
 
 const dataSource = new DataSource({
   ...(options as any),
-  entities: [Booking, Room]
+  entities: [
+    Booking,
+    Room,
+    // Include related entities to satisfy relations on Booking
+    require('../src/modules/audit/audit-log.entity').AuditLog,
+    require('../src/modules/notifications/notification-outbox.entity').NotificationOutbox
+  ]
 });
 
 interface ScheduleRow {
